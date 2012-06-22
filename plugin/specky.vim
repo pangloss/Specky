@@ -17,10 +17,6 @@ if exists( 'g:speckyQuoteSwitcherKey' )
 	execute 'map ' . g:speckyQuoteSwitcherKey . ' :call <SID>QuoteSwitcher()<CR>'
 endif
 
-if exists( 'g:speckyBannerKey' )
-	execute 'map ' . g:speckyBannerKey . ' :call <SID>MakeBanner()<CR>'
-endif
-
 if exists( 'g:speckyRunSpecKey' )
 	execute 'map ' . g:speckyRunSpecKey . ' :call <SID>RunSpec()<CR>'
 endif
@@ -43,7 +39,6 @@ execute 'menu ' . s:menuloc . '.&Jump\ to\ code/spec :call <SID>SpecSwitcher()<C
 execute 'menu ' . s:menuloc . '.Run\ &spec :call <SID>RunSpec()<CR>'
 execute 'menu ' . s:menuloc . '.&RDoc\ lookup :call <SID>RunRdoc()<CR>'
 execute 'menu ' . s:menuloc . '.Rotate\ &quote\ style :call <SID>QuoteSwitcher()<CR>'
-execute 'menu ' . s:menuloc . '.Make\ a\ &banner :call <SID>MakeBanner()<CR>'
 
 
 " }}}
@@ -135,24 +130,6 @@ function! <SID>QuoteSwitcher()
 
 	" Move the cursor back into the cl:word
 	call cursor( 0, getpos('.')[2] - 1 )
-endfunction
-
-
-" }}}
-" MakeBanner() {{{
-"
-" Create a quick banner from the current line's text.
-"
-function! <SID>MakeBanner()
-	let l:banner_text = toupper(join( split( getline('.'), '\zs' ), ' ' ))
-	let l:banner_text = substitute( l:banner_text, '^\s\+', '', '' )
-	let l:sep = repeat( '#', &textwidth == 0 ? 72 : &textwidth )
-	let l:line = line('.')
-
-	call setline( l:line, l:sep )
- 	call append( l:line, [ '### ' . l:banner_text, l:sep ] )
-	execute 'normal 3=='
-	call cursor( l:line + 3, 0 )
 endfunction
 
 
